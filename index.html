@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SWE Interview Prep Guide 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#ffffff;--bg2:#f8f7f4;--bg3:#f1efe8;
+  --text:#1a1a1a;--text2:#555550;--text3:#888780;
+  --border:#e0ded8;--border2:#c8c6c0;
+  --blue-bg:#E6F1FB;--blue-text:#185FA5;--blue-accent:#378ADD;
+  --amber-bg:#FAEEDA;--amber-text:#854F0B;--amber-accent:#EF9F27;
+  --green-bg:#E1F5EE;--green-text:#0F6E56;--green-accent:#1D9E75;
+  --red-bg:#FCEBEB;--red-text:#A32D2D;--red-accent:#E24B4A;
+  --purple-bg:#EEEDFE;--purple-text:#534AB7;
+  --teal-bg:#E1F5EE;--teal-text:#0F6E56;
+  --coral-bg:#FAECE7;--coral-text:#993C1D;
+  --radius:8px;--radius-lg:12px;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#1a1a18;--bg2:#252522;--bg3:#2e2e2b;
+    --text:#f0ede8;--text2:#b4b2a9;--text3:#888780;
+    --border:#3a3a36;--border2:#4a4a46;
+    --blue-bg:#042C53;--blue-text:#85B7EB;
+    --amber-bg:#412402;--amber-text:#FAC775;
+    --green-bg:#04342C;--green-text:#5DCAA5;
+    --red-bg:#501313;--red-text:#F09595;
+    --purple-bg:#26215C;--purple-text:#AFA9EC;
+    --teal-bg:#04342C;--teal-text:#5DCAA5;
+    --coral-bg:#4A1B0C;--coral-text:#F0997B;
+  }
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg3);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
+.app{max-width:900px;margin:0 auto;background:var(--bg);min-height:100vh;box-shadow:0 0 40px rgba(0,0,0,0.08)}
+.header{padding:2rem 2rem 1.5rem;border-bottom:0.5px solid var(--border)}
+.header h1{font-size:22px;font-weight:600;color:var(--text);margin-bottom:4px}
+.header p{font-size:13px;color:var(--text3)}
+.tabs{display:flex;gap:6px;padding:1rem 2rem;background:var(--bg2);border-bottom:0.5px solid var(--border);flex-wrap:wrap;position:sticky;top:0;z-index:100}
+.tab{padding:7px 14px;border:0.5px solid var(--border2);border-radius:var(--radius);font-size:13px;cursor:pointer;background:var(--bg);color:var(--text2);transition:all .15s;font-family:inherit}
+.tab:hover{background:var(--bg3)}
+.tab.active{background:var(--text);color:var(--bg);border-color:var(--text)}
+.panel{display:none;padding:1.5rem 2rem 3rem}
+.panel.active{display:block}
+.section-title{font-size:14px;font-weight:600;color:var(--text);margin:1.5rem 0 0.75rem;padding-bottom:8px;border-bottom:0.5px solid var(--border);text-transform:uppercase;letter-spacing:.05em}
+.card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1rem 1.25rem;margin-bottom:10px}
+.badge{display:inline-block;font-size:11px;padding:3px 8px;border-radius:var(--radius);font-weight:500;margin-right:5px;white-space:nowrap}
+.badge-easy{background:#EAF3DE;color:#3B6D11}
+.badge-med{background:#FAEEDA;color:#854F0B}
+.badge-hard{background:#FCEBEB;color:#A32D2D}
+.badge-new{background:#E6F1FB;color:#185FA5}
+.badge-hot{background:#FAECE7;color:#993C1D}
+.badge-sys{background:#EEEDFE;color:#534AB7}
+.problem-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:0.5px solid var(--border);font-size:13px;flex-wrap:wrap}
+.problem-row:last-child{border-bottom:none}
+.problem-name{flex:1;color:var(--text);font-weight:500;min-width:180px}
+.pattern-tag{font-size:11px;color:var(--text3);background:var(--bg2);padding:2px 8px;border-radius:20px;white-space:nowrap}
+.company-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1rem}
+.company-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:14px;cursor:pointer;transition:all .15s}
+.company-card:hover{border-color:var(--border2);background:var(--bg3)}
+.company-card.selected{border:1.5px solid var(--text);background:var(--bg)}
+.company-name{font-size:13px;font-weight:600;color:var(--text)}
+.company-label{font-size:11px;color:var(--text3);margin-top:3px}
+.detail-box{display:none;background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1rem 1.25rem;margin-bottom:1rem;animation:fadeIn .15s ease}
+.detail-box.show{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:1.5rem}
+.stat{background:var(--bg2);border-radius:var(--radius);padding:14px;text-align:center}
+.stat-num{font-size:24px;font-weight:600;color:var(--text)}
+.stat-label{font-size:11px;color:var(--text3);margin-top:4px}
+.highlight-box{border-left:3px solid var(--blue-accent);background:var(--blue-bg);padding:10px 14px;border-radius:0 var(--radius) var(--radius) 0;margin-bottom:10px;font-size:13px;color:var(--blue-text);line-height:1.5}
+.warn-box{border-left:3px solid var(--amber-accent);background:var(--amber-bg);padding:10px 14px;border-radius:0 var(--radius) var(--radius) 0;margin-bottom:10px;font-size:13px;color:var(--amber-text);line-height:1.5}
+.success-box{border-left:3px solid var(--green-accent);background:var(--green-bg);padding:10px 14px;border-radius:0 var(--radius) var(--radius) 0;margin-bottom:10px;font-size:13px;color:var(--green-text);line-height:1.5}
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
+.filter-btn{padding:5px 14px;border:0.5px solid var(--border2);border-radius:20px;font-size:12px;cursor:pointer;background:var(--bg2);color:var(--text2);transition:all .15s;font-family:inherit}
+.filter-btn:hover{background:var(--bg3)}
+.filter-btn.active{background:var(--text);color:var(--bg)}
+.week-header{font-size:13px;font-weight:600;color:var(--text);margin-bottom:10px;padding-bottom:6px;border-bottom:0.5px solid var(--border)}
+.trend-item{display:flex;gap:14px;padding:14px 0;border-bottom:0.5px solid var(--border)}
+.trend-item:last-child{border-bottom:none}
+.trend-icon{width:36px;height:36px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.trend-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+.trend-desc{font-size:13px;color:var(--text2);line-height:1.6}
+.checkbox-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid var(--border);cursor:pointer;transition:background .1s;border-radius:4px;padding-left:4px}
+.checkbox-row:last-child{border-bottom:none}
+.checkbox-row:hover{background:var(--bg2)}
+.checkbox{width:16px;height:16px;border:1.5px solid var(--border2);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.checkbox.checked{background:var(--text);border-color:var(--text)}
+.checkmark{width:10px;height:10px;fill:none;stroke:var(--bg);stroke-width:2.5}
+.footer{padding:2rem;text-align:center;font-size:12px;color:var(--text3);border-top:0.5px solid var(--border)}
+.month-block{display:block}
+@media(max-width:600px){
+  .panel,.header{padding:1rem}
+  .tabs{padding:.75rem 1rem}
+  .problem-name{min-width:120px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="header">
+  <h1>SWE Interview Prep Guide 2026</h1>
+  <p>4-month study plan · 6+ companies · Updated with 2025-2026 interview trends</p>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showPanel('overview',this)">Overview</button>
+  <button class="tab" onclick="showPanel('dsa',this)">DSA Plan</button>
+  <button class="tab" onclick="showPanel('companies',this)">Companies</button>
+  <button class="tab" onclick="showPanel('trends',this)">2026 Trends</button>
+  <button class="tab" onclick="showPanel('tracker',this)">My Tracker</button>
+</div>
+
+<!-- OVERVIEW -->
+<div id="overview" class="panel active">
+  <div class="stat-grid">
+    <div class="stat"><div class="stat-num">118</div><div class="stat-label">Core DSA problems</div></div>
+    <div class="stat"><div class="stat-num">8</div><div class="stat-label">Companies covered</div></div>
+    <div class="stat"><div class="stat-num">16</div><div class="stat-label">Weeks total</div></div>
+    <div class="stat"><div class="stat-num">11</div><div class="stat-label">Key patterns</div></div>
+  </div>
+  <div class="highlight-box">🔵 2026 update: Interviews now test systems reasoning + AI tool awareness, not just LeetCode speed. Trends added.</div>
+
+  <div class="section-title">Problems appearing at 3+ companies (highest ROI)</div>
+  <div class="card">
+    <div class="problem-row"><div class="problem-name">LRU Cache</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Rubrik · Meta · Apple · Amazon</div></div>
+    <div class="problem-row"><div class="problem-name">Number of Islands</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Google · Meta · Microsoft · Amazon</div></div>
+    <div class="problem-row"><div class="problem-name">Word Ladder</div><span class="badge badge-hard">Hard</span><div class="pattern-tag">Google · Rubrik · Amazon · Netflix</div></div>
+    <div class="problem-row"><div class="problem-name">Merge Intervals</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Google · Meta · Microsoft · Amazon</div></div>
+    <div class="problem-row"><div class="problem-name">Course Schedule I + II</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Google · Rubrik · Meta · Microsoft</div></div>
+    <div class="problem-row"><div class="problem-name">Find Median from Data Stream</div><span class="badge badge-hard">Hard</span><div class="pattern-tag">Google · Rubrik · Netflix · Apple</div></div>
+    <div class="problem-row"><div class="problem-name">Serialize/Deserialize Binary Tree</div><span class="badge badge-hard">Hard</span><div class="pattern-tag">Rubrik · Google · Meta</div></div>
+    <div class="problem-row"><div class="problem-name">Edit Distance</div><span class="badge badge-hard">Hard</span><div class="pattern-tag">Google · Rubrik · Meta · Microsoft</div></div>
+    <div class="problem-row"><div class="problem-name">Lowest Common Ancestor</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Rubrik · Meta · Apple · Google</div></div>
+    <div class="problem-row"><div class="problem-name">Trapping Rain Water</div><span class="badge badge-hard">Hard</span><div class="pattern-tag">Amazon · Meta · Netflix</div></div>
+  </div>
+
+  <div class="section-title">Key patterns to master</div>
+  <div class="card">
+    <div class="problem-row"><div class="problem-name">Sliding window</div><div class="pattern-tag">Substring/subarray with constraint</div></div>
+    <div class="problem-row"><div class="problem-name">Two pointers</div><div class="pattern-tag">Sorted arrays, palindromes, sum problems</div></div>
+    <div class="problem-row"><div class="problem-name">Fast/slow pointers</div><div class="pattern-tag">Linked list cycle detection</div></div>
+    <div class="problem-row"><div class="problem-name">BFS</div><div class="pattern-tag">Shortest path, level order, multi-source</div></div>
+    <div class="problem-row"><div class="problem-name">DFS</div><div class="pattern-tag">Tree traversal, flood fill, backtracking</div></div>
+    <div class="problem-row"><div class="problem-name">Monotonic stack</div><div class="pattern-tag">Next greater/smaller element</div></div>
+    <div class="problem-row"><div class="problem-name">Union-Find</div><div class="pattern-tag">Connected components, cycle detection</div></div>
+    <div class="problem-row"><div class="problem-name">Topological sort</div><div class="pattern-tag">Dependency ordering (Kahn's BFS or DFS)</div></div>
+    <div class="problem-row"><div class="problem-name">Binary search on answer</div><div class="pattern-tag">Not just sorted arrays — on answer space</div></div>
+    <div class="problem-row"><div class="problem-name">DP state machine</div><div class="pattern-tag">Buy/sell stock variants</div></div>
+    <div class="problem-row"><div class="problem-name">0/1 knapsack</div><div class="pattern-tag">Subset sum, partition problems</div></div>
+  </div>
+</div>
+
+<!-- DSA PLAN -->
+<div id="dsa" class="panel">
+  <div class="filter-row">
+    <button class="filter-btn active" onclick="filterMonths('all',this)">All months</button>
+    <button class="filter-btn" onclick="filterMonths('m1',this)">Month 1</button>
+    <button class="filter-btn" onclick="filterMonths('m2',this)">Month 2</button>
+    <button class="filter-btn" onclick="filterMonths('m3',this)">Month 3</button>
+    <button class="filter-btn" onclick="filterMonths('m4',this)">Month 4</button>
+  </div>
+
+  <div class="month-block" data-month="m1">
+  <div class="section-title">Month 1 — Foundations</div>
+  <div class="card">
+    <div class="week-header">Week 1 — Arrays, Hashing, Two Pointers</div>
+    <div class="problem-row"><div class="problem-name">Two Sum</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">HashMap</div></div>
+    <div class="problem-row"><div class="problem-name">Contains Duplicate</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">HashSet</div></div>
+    <div class="problem-row"><div class="problem-name">Valid Anagram</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">Freq count</div></div>
+    <div class="problem-row"><div class="problem-name">Group Anagrams</div><span class="badge badge-med">Medium</span><div class="pattern-tag">HashMap</div></div>
+    <div class="problem-row"><div class="problem-name">Top K Frequent Elements</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Bucket sort</div></div>
+    <div class="problem-row"><div class="problem-name">Product of Array Except Self</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Prefix product</div></div>
+    <div class="problem-row"><div class="problem-name">Longest Consecutive Sequence</div><span class="badge badge-med">Medium</span><div class="pattern-tag">HashSet</div></div>
+    <div class="problem-row"><div class="problem-name">Valid Palindrome</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">Two pointers</div></div>
+    <div class="problem-row"><div class="problem-name">3Sum</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Sort + two ptr</div></div>
+    <div class="problem-row"><div class="problem-name">Container With Most Water</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Two pointers</div></div>
+  </div>
+  <div class="card">
+    <div class="week-header">Week 2 — Sliding Window + Binary Search + Stack</div>
+    <div class="problem-row"><div class="problem-name">Best Time to Buy/Sell Stock</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">Sliding window</div></div>
+    <div class="problem-row"><div class="problem-name">Longest Substring Without Repeating Chars</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Sliding window</div></div>
+    <div class="problem-row"><div class="problem-name">Longest Repeating Character Replacement</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Sliding window</div></div>
+    <div class="problem-row"><div class="problem-name">Minimum Window Substring</div><span class="badge badge-hard">Hard</span><div class="pattern-tag">Sliding window</div></div>
+    <div class="problem-row"><div class="problem-name">Binary Search</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">Template</div></div>
+    <div class="problem-row"><div class="problem-name">Search in Rotated Sorted Array</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Binary search</div></div>
+    <div class="problem-row"><div class="problem-name">Find Min in Rotated Sorted Array</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Binary search</div></div>
+    <div class="problem-row"><div class="problem-name">Koko Eating Bananas</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Binary search on answer</div></div>
+    <div class="problem-row"><div class="problem-name">Valid Parentheses</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">Stack</div></div>
+    <div class="problem-row"><div class="problem-name">Daily Temperatures</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Monotonic stack</div></div>
+    <div class="problem-row"><div class="problem-name">Car Fleet</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Monotonic stack</div></div>
+    <div class="problem-row"><div class="problem-name">Largest Rectangle in Histogram</div><span class="badge badge-hard">Hard</span><div class="pattern-tag">Monotonic stack</div></div>
+  </div>
+  <div class="card">
+    <div class="week-header">Week 3 — Linked Lists</div>
+    <div class="problem-row"><div class="problem-name">Reverse Linked List</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">Iterative/recursive</div></div>
+    <div class="problem-row"><div class="problem-name">Merge Two Sorted Lists</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">Two pointers</div></div>
+    <div class="problem-row"><div class="problem-name">Linked List Cycle</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">Fast/slow ptr</div></div>
+    <div class="problem-row"><div class="problem-name">Reorder List</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Fast/slow + reverse</div></div>
+    <div class="problem-row"><div class="problem-name">Remove Nth Node From End</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Two pointers</div></div>
+    <div class="problem-row"><div class="problem-name">Find Duplicate Number</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Floyd's cycle</div></div>
+    <div class="problem-row"><div class="problem-name">LRU Cache</div><span class="badge badge-med">Medium</span><span class="badge badge-hot">🔥 Multi-company</span><div class="pattern-tag">HashMap + DLL</div></div>
+    <div class="problem-row"><div class="problem-name">Merge K Sorted Lists</div><span class="badge badge-hard">Hard</span><div class="pattern-tag">Min heap</div></div>
+  </div>
+  <div class="card">
+    <div class="week-header">Week 4 — Binary Trees Basics</div>
+    <div class="problem-row"><div class="problem-name">Invert Binary Tree</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">DFS</div></div>
+    <div class="problem-row"><div class="problem-name">Max Depth of Binary Tree</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">DFS</div></div>
+    <div class="problem-row"><div class="problem-name">Diameter of Binary Tree</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">DFS</div></div>
+    <div class="problem-row"><div class="problem-name">Balanced Binary Tree</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">DFS</div></div>
+    <div class="problem-row"><div class="problem-name">Same Tree</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">DFS</div></div>
+    <div class="problem-row"><div class="problem-name">Level Order Traversal</div><span class="badge badge-med">Medium</span><div class="pattern-tag">BFS</div></div>
+    <div class="problem-row"><div class="problem-name">Right Side View</div><span class="badge badge-med">Medium</span><div class="pattern-tag">BFS</div></div>
+    <div class="problem-row"><div class="problem-name">Count Good Nodes</div><span class="badge badge-med">Medium</span><div class="pattern-tag">DFS</div></div>
+    <div class="problem-row"><div class="problem-name">Validate BST</div><span class="badge badge-med">Medium</span><div class="pattern-tag">DFS with range</div></div>
+    <div class="problem-row"><div class="problem-name">Kth Smallest in BST</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Inorder</div></div>
+    <div class="problem-row"><div class="problem-name">Lowest Common Ancestor of BST</div><span class="badge badge-med">Medium</span><span class="badge badge-hot">🔥 Multi-company</span><div class="pattern-tag">BST property</div></div>
+    <div class="problem-row"><div class="problem-name">Binary Tree Max Path Sum</div><span class="badge badge-hard">Hard</span><div class="pattern-tag">DFS</div></div>
+  </div>
+  </div>
+
+  <div class="month-block" data-month="m2">
+  <div class="section-title">Month 2 — Trees (Advanced) + Graphs</div>
+  <div class="card">
+    <div class="week-header">Week 5 — Advanced Trees + Tries</div>
+    <div class="problem-row"><div class="problem-name">Construct Tree from Preorder+Inorder</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Recursion</div></div>
+    <div class="problem-row"><div class="problem-name">Serialize/Deserialize Binary Tree</div><span class="badge badge-hard">Hard</span><span class="badge badge-hot">🔥 Multi-company</span><div class="pattern-tag">BFS/DFS</div></div>
+    <div class="problem-row"><div class="problem-name">Implement Trie</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Trie</div></div>
+    <div class="problem-row"><div class="problem-name">Design Add and Search Words</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Trie + DFS</div></div>
+    <div class="problem-row"><div class="problem-name">Word Search II</div><span class="badge badge-hard">Hard</span><div class="pattern-tag">Trie + backtrack</div></div>
+  </div>
+  <div class="card">
+    <div class="week-header">Week 6 — Heap / Priority Queue</div>
+    <div class="problem-row"><div class="problem-name">Kth Largest Element in Array</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Min heap</div></div>
+    <div class="problem-row"><div class="problem-name">K Closest Points to Origin</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Max heap</div></div>
+    <div class="problem-row"><div class="problem-name">Task Scheduler</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Greedy + heap</div></div>
+    <div class="problem-row"><div class="problem-name">Design Twitter</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Heap + HashMap</div></div>
+    <div class="problem-row"><div class="problem-name">Find Median from Data Stream</div><span class="badge badge-hard">Hard</span><span class="badge badge-hot">🔥 Multi-company</span><div class="pattern-tag">Two heaps</div></div>
+  </div>
+  <div class="card">
+    <div class="week-header">Week 7 — Graph BFS/DFS</div>
+    <div class="problem-row"><div class="problem-name">Number of Islands</div><span class="badge badge-med">Medium</span><span class="badge badge-hot">🔥 Multi-company</span><div class="pattern-tag">DFS/BFS</div></div>
+    <div class="problem-row"><div class="problem-name">Max Area of Island</div><span class="badge badge-med">Medium</span><div class="pattern-tag">DFS</div></div>
+    <div class="problem-row"><div class="problem-name">Clone Graph</div><span class="badge badge-med">Medium</span><div class="pattern-tag">BFS + HashMap</div></div>
+    <div class="problem-row"><div class="problem-name">Pacific Atlantic Water Flow</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Multi-source BFS</div></div>
+    <div class="problem-row"><div class="problem-name">Surrounded Regions</div><span class="badge badge-med">Medium</span><div class="pattern-tag">BFS from border</div></div>
+    <div class="problem-row"><div class="problem-name">Rotting Oranges</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Multi-source BFS</div></div>
+    <div class="problem-row"><div class="problem-name">Course Schedule</div><span class="badge badge-med">Medium</span><span class="badge badge-hot">🔥 Multi-company</span><div class="pattern-tag">Topological sort — cycle detect</div></div>
+    <div class="problem-row"><div class="problem-name">Course Schedule II</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Topological sort — Kahn's</div></div>
+  </div>
+  <div class="card">
+    <div class="week-header">Week 8 — Advanced Graphs</div>
+    <div class="problem-row"><div class="problem-name">Redundant Connection</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Union-Find</div></div>
+    <div class="problem-row"><div class="problem-name">Number of Connected Components</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Union-Find</div></div>
+    <div class="problem-row"><div class="problem-name">Graph Valid Tree</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Union-Find</div></div>
+    <div class="problem-row"><div class="problem-name">Network Delay Time</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Dijkstra</div></div>
+    <div class="problem-row"><div class="problem-name">Cheapest Flights Within K Stops</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Bellman-Ford</div></div>
+    <div class="problem-row"><div class="problem-name">Min Cost to Connect All Points</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Prim's / Kruskal</div></div>
+    <div class="problem-row"><div class="problem-name">Swim in Rising Water</div><span class="badge badge-hard">Hard</span><div class="pattern-tag">Dijkstra</div></div>
+    <div class="problem-row"><div class="problem-name">Word Ladder</div><span class="badge badge-hard">Hard</span><span class="badge badge-hot">🔥 Multi-company</span><div class="pattern-tag">BFS</div></div>
+  </div>
+  </div>
+
+  <div class="month-block" data-month="m3">
+  <div class="section-title">Month 3 — DP + Greedy + Backtracking</div>
+  <div class="card">
+    <div class="week-header">Week 9 — 1D Dynamic Programming</div>
+    <div class="problem-row"><div class="problem-name">Climbing Stairs</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">DP</div></div>
+    <div class="problem-row"><div class="problem-name">Min Cost Climbing Stairs</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">DP</div></div>
+    <div class="problem-row"><div class="problem-name">House Robber</div><span class="badge badge-med">Medium</span><div class="pattern-tag">DP</div></div>
+    <div class="problem-row"><div class="problem-name">House Robber II</div><span class="badge badge-med">Medium</span><div class="pattern-tag">DP circular</div></div>
+    <div class="problem-row"><div class="problem-name">Longest Palindromic Substring</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Expand around center</div></div>
+    <div class="problem-row"><div class="problem-name">Decode Ways</div><span class="badge badge-med">Medium</span><div class="pattern-tag">DP</div></div>
+    <div class="problem-row"><div class="problem-name">Coin Change</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Unbounded knapsack</div></div>
+    <div class="problem-row"><div class="problem-name">Maximum Product Subarray</div><span class="badge badge-med">Medium</span><div class="pattern-tag">DP track min/max</div></div>
+    <div class="problem-row"><div class="problem-name">Word Break</div><span class="badge badge-med">Medium</span><div class="pattern-tag">DP</div></div>
+    <div class="problem-row"><div class="problem-name">Longest Increasing Subsequence</div><span class="badge badge-med">Medium</span><div class="pattern-tag">DP / binary search</div></div>
+    <div class="problem-row"><div class="problem-name">Partition Equal Subset Sum</div><span class="badge badge-med">Medium</span><div class="pattern-tag">0/1 knapsack</div></div>
+  </div>
+  <div class="card">
+    <div class="week-header">Week 10 — 2D Dynamic Programming</div>
+    <div class="problem-row"><div class="problem-name">Unique Paths</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Grid DP</div></div>
+    <div class="problem-row"><div class="problem-name">Longest Common Subsequence</div><span class="badge badge-med">Medium</span><div class="pattern-tag">2D DP</div></div>
+    <div class="problem-row"><div class="problem-name">Coin Change II</div><span class="badge badge-med">Medium</span><div class="pattern-tag">2D DP</div></div>
+    <div class="problem-row"><div class="problem-name">Target Sum</div><span class="badge badge-med">Medium</span><div class="pattern-tag">DFS/DP</div></div>
+    <div class="problem-row"><div class="problem-name">Interleaving String</div><span class="badge badge-med">Medium</span><div class="pattern-tag">2D DP</div></div>
+    <div class="problem-row"><div class="problem-name">Edit Distance</div><span class="badge badge-hard">Hard</span><span class="badge badge-hot">🔥 Multi-company</span><div class="pattern-tag">2D DP</div></div>
+    <div class="problem-row"><div class="problem-name">Best Time to Buy Stock with Cooldown</div><span class="badge badge-med">Medium</span><div class="pattern-tag">State machine DP</div></div>
+    <div class="problem-row"><div class="problem-name">Distinct Subsequences</div><span class="badge badge-hard">Hard</span><div class="pattern-tag">2D DP</div></div>
+    <div class="problem-row"><div class="problem-name">Burst Balloons</div><span class="badge badge-hard">Hard</span><div class="pattern-tag">Interval DP</div></div>
+  </div>
+  <div class="card">
+    <div class="week-header">Week 11 — Greedy + Intervals</div>
+    <div class="problem-row"><div class="problem-name">Maximum Subarray</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Kadane's</div></div>
+    <div class="problem-row"><div class="problem-name">Jump Game</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Greedy</div></div>
+    <div class="problem-row"><div class="problem-name">Jump Game II</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Greedy BFS-like</div></div>
+    <div class="problem-row"><div class="problem-name">Gas Station</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Greedy</div></div>
+    <div class="problem-row"><div class="problem-name">Merge Intervals</div><span class="badge badge-med">Medium</span><span class="badge badge-hot">🔥 Multi-company</span><div class="pattern-tag">Sort + merge</div></div>
+    <div class="problem-row"><div class="problem-name">Insert Interval</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Linear scan</div></div>
+    <div class="problem-row"><div class="problem-name">Non-Overlapping Intervals</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Greedy</div></div>
+    <div class="problem-row"><div class="problem-name">Meeting Rooms II</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Min heap</div></div>
+    <div class="problem-row"><div class="problem-name">Partition Labels</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Greedy</div></div>
+    <div class="problem-row"><div class="problem-name">Trapping Rain Water</div><span class="badge badge-hard">Hard</span><span class="badge badge-hot">🔥 Multi-company</span><div class="pattern-tag">Two pointers</div></div>
+  </div>
+  <div class="card">
+    <div class="week-header">Week 12 — Backtracking + Bit Manipulation</div>
+    <div class="problem-row"><div class="problem-name">Subsets</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Backtracking</div></div>
+    <div class="problem-row"><div class="problem-name">Subsets II</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Backtracking dedup</div></div>
+    <div class="problem-row"><div class="problem-name">Combination Sum</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Backtracking</div></div>
+    <div class="problem-row"><div class="problem-name">Combination Sum II</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Backtracking dedup</div></div>
+    <div class="problem-row"><div class="problem-name">Permutations</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Backtracking</div></div>
+    <div class="problem-row"><div class="problem-name">Word Search</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Backtracking + DFS</div></div>
+    <div class="problem-row"><div class="problem-name">Palindrome Partitioning</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Backtracking + DP</div></div>
+    <div class="problem-row"><div class="problem-name">N-Queens</div><span class="badge badge-hard">Hard</span><div class="pattern-tag">Backtracking</div></div>
+    <div class="problem-row"><div class="problem-name">Single Number</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">XOR</div></div>
+    <div class="problem-row"><div class="problem-name">Number of 1 Bits</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">Bit mask</div></div>
+    <div class="problem-row"><div class="problem-name">Missing Number</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">XOR / math</div></div>
+    <div class="problem-row"><div class="problem-name">Reverse Bits</div><span class="badge badge-easy">Easy</span><div class="pattern-tag">Bit ops</div></div>
+    <div class="problem-row"><div class="problem-name">Sum of Two Integers</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Bit addition</div></div>
+  </div>
+  </div>
+
+  <div class="month-block" data-month="m4">
+  <div class="section-title">Month 4 — Polish + Mocks + 2026 Additions</div>
+  <div class="card">
+    <div class="week-header">Week 13 — Math, Matrix, Review Weak Areas</div>
+    <div class="problem-row"><div class="problem-name">Rotate Image</div><span class="badge badge-med">Medium</span><div class="pattern-tag">In-place matrix</div></div>
+    <div class="problem-row"><div class="problem-name">Spiral Matrix</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Simulation</div></div>
+    <div class="problem-row"><div class="problem-name">Set Matrix Zeroes</div><span class="badge badge-med">Medium</span><div class="pattern-tag">In-place flag</div></div>
+    <div class="problem-row"><div class="problem-name">Pow(x, n)</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Fast exponentiation</div></div>
+    <div class="problem-row"><div class="problem-name">Multiply Strings</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Grade-school multiply</div></div>
+    <div class="problem-row"><div class="problem-name">Regular Expression Matching</div><span class="badge badge-hard">Hard</span><div class="pattern-tag">DP</div></div>
+    <div class="problem-row"><div class="problem-name">Alien Dictionary</div><span class="badge badge-hard">Hard</span><div class="pattern-tag">Topological sort</div></div>
+    <div class="problem-row"><div class="problem-name">LFU Cache</div><span class="badge badge-hard">Hard</span><span class="badge badge-hot">🔥 Rubrik/Netflix</span><div class="pattern-tag">HashMap + freq buckets</div></div>
+    <div class="problem-row"><div class="problem-name">Critical Connections (Tarjan's)</div><span class="badge badge-hard">Hard</span><span class="badge badge-hot">🔥 Rubrik/Amazon</span><div class="pattern-tag">Bridge-finding algorithm</div></div>
+    <div class="problem-row"><div class="problem-name">Accounts Merge</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Union-Find</div></div>
+  </div>
+  <div class="card">
+    <div class="week-header">Weeks 14-16 — Mocks + System Design + 2026 Additions</div>
+    <div class="problem-row"><div class="problem-name">2-3 mock interviews/week (LeetCode / Pramp)</div><span class="badge badge-new">Mocks</span><div class="pattern-tag">45 min timed, no hints</div></div>
+    <div class="problem-row"><div class="problem-name">Systems reasoning: diagnose a failing service</div><span class="badge badge-new">2026 trend</span><div class="pattern-tag">Log analysis, cache miss, retry storm</div></div>
+    <div class="problem-row"><div class="problem-name">Design: URL Shortener, Rate Limiter, Chat System</div><span class="badge badge-sys">System Design</span><div class="pattern-tag">ByteByteGo free articles</div></div>
+    <div class="problem-row"><div class="problem-name">Design: Distributed cache / key-value store</div><span class="badge badge-sys">System Design</span><div class="pattern-tag">Consistency, CAP theorem</div></div>
+    <div class="problem-row"><div class="problem-name">Geospatial indexing basics</div><span class="badge badge-new">2026 trend</span><div class="pattern-tag">Geohashing, Quadtrees — now standard</div></div>
+    <div class="problem-row"><div class="problem-name">AI tools answer prep</div><span class="badge badge-new">2026 must</span><div class="pattern-tag">2 stories: AI helped + where you caught errors</div></div>
+    <div class="problem-row"><div class="problem-name">Concurrency problems (Rubrik / Netflix)</div><span class="badge badge-med">Medium</span><div class="pattern-tag">Print in Order (1114), FooBar (1115), H2O (1117)</div></div>
+  </div>
+  </div>
+</div>
+
+<!-- COMPANIES -->
+<div id="companies" class="panel">
+  <p style="font-size:13px;color:var(--text3);margin-bottom:1rem">Click a company to see its unique focus and interview format.</p>
+  <div class="company-grid">
+    <div class="company-card" onclick="toggleCompany('google',this)"><div class="company-name">Google</div><div class="company-label">L3/L4 · 6 rounds</div></div>
+    <div class="company-card" onclick="toggleCompany('meta',this)"><div class="company-name">Meta</div><div class="company-label">E4/E5 · 6 rounds</div></div>
+    <div class="company-card" onclick="toggleCompany('microsoft',this)"><div class="company-name">Microsoft</div><div class="company-label">SWE II · 5 rounds</div></div>
+    <div class="company-card" onclick="toggleCompany('amazon',this)"><div class="company-name">Amazon</div><div class="company-label">SDE II · LP heavy</div></div>
+    <div class="company-card" onclick="toggleCompany('netflix',this)"><div class="company-name">Netflix</div><div class="company-label">Senior · Hard-skewed</div></div>
+    <div class="company-card" onclick="toggleCompany('apple',this)"><div class="company-name">Apple</div><div class="company-label">ICT3/ICT4 · Team-specific</div></div>
+    <div class="company-card" onclick="toggleCompany('rubrik',this)"><div class="company-name">Rubrik</div><div class="company-label">SWE II/III · Concurrency</div></div>
+    <div class="company-card" onclick="toggleCompany('stripe',this)"><div class="company-name">Stripe / Databricks</div><div class="company-label">Tier-1 non-FAANG</div></div>
+  </div>
+
+  <div id="detail-google" class="detail-box">
+    <div class="section-title" style="margin-top:0">Google</div>
+    <div class="highlight-box">Optimization obsession: get O(n²) → push for O(n log n) → then O(n). Always discuss time/space complexity unprompted.</div>
+    <div class="problem-row"><div class="problem-name">Rounds</div><div class="pattern-tag">Phone screen · 3 coding · System design · Googleyness behavioral</div></div>
+    <div class="problem-row"><div class="problem-name">Key patterns</div><div class="pattern-tag">Prefix sums · Segment trees · Interval problems · DFS/BFS with state</div></div>
+    <div class="problem-row"><div class="problem-name">Unique trait</div><div class="pattern-tag">Code quality + scalability awareness required even in coding rounds</div></div>
+    <div class="problem-row"><div class="problem-name">Behavioral format</div><div class="pattern-tag">STAR — leadership, cross-team impact, navigating ambiguity</div></div>
+    <div class="problem-row"><div class="problem-name">Top offices (ex-India)</div><div class="pattern-tag">SF · Seattle · NYC · London · Zurich · Warsaw · Singapore · Tokyo</div></div>
+  </div>
+  <div id="detail-meta" class="detail-box">
+    <div class="section-title" style="margin-top:0">Meta (Facebook)</div>
+    <div class="highlight-box">Speed matters: 2 problems per round expected. Practice completing mediums in under 20 min. Product sense required in every answer.</div>
+    <div class="warn-box">Meta has piloted AI-assisted coding environments — be prepared to explain your reasoning for every line, not just produce output.</div>
+    <div class="problem-row"><div class="problem-name">Rounds</div><div class="pattern-tag">Recruiter · 2 coding · System design · Behavioral</div></div>
+    <div class="problem-row"><div class="problem-name">Heaviest topics</div><div class="pattern-tag">Arrays/strings · Trees · Graphs · DP · System design (product-oriented)</div></div>
+    <div class="problem-row"><div class="problem-name">Unique trait</div><div class="pattern-tag">Connect tech solutions to user impact; production-ready code style</div></div>
+    <div class="problem-row"><div class="problem-name">Behavioral format</div><div class="pattern-tag">Meta values: Move fast · Be bold · Focus on impact · Be open</div></div>
+    <div class="problem-row"><div class="problem-name">Top offices (ex-India)</div><div class="pattern-tag">Menlo Park · Seattle · NYC · Austin · London · Dublin · Singapore</div></div>
+  </div>
+  <div id="detail-microsoft" class="detail-box">
+    <div class="section-title" style="margin-top:0">Microsoft</div>
+    <div class="success-box">Most accessible FAANG-tier company. More medium-weighted, fewer hard problems. Strong collaborative culture ("One Microsoft").</div>
+    <div class="problem-row"><div class="problem-name">Rounds</div><div class="pattern-tag">Phone screen · 3 technical · As-Appropriate (senior interviewer)</div></div>
+    <div class="problem-row"><div class="problem-name">Heaviest topics</div><div class="pattern-tag">Trees · Linked lists · Arrays · OOP/design patterns · Real-world scenarios</div></div>
+    <div class="problem-row"><div class="problem-name">Unique trait</div><div class="pattern-tag">Practical coding over theoretical CS; lighter system design at 3 YOE</div></div>
+    <div class="problem-row"><div class="problem-name">Behavioral themes</div><div class="pattern-tag">Growth Mindset · D&I · Customer Obsession · One Microsoft collaboration</div></div>
+    <div class="problem-row"><div class="problem-name">Top offices</div><div class="pattern-tag">Redmond · Seattle · NYC · London · Amsterdam · Dublin · Singapore</div></div>
+  </div>
+  <div id="detail-amazon" class="detail-box">
+    <div class="section-title" style="margin-top:0">Amazon</div>
+    <div class="warn-box">⚠️ Amazon is ~50% behavioral. Every round includes LP questions. Without LP story prep you can fail regardless of your DSA score.</div>
+    <div class="problem-row"><div class="problem-name">Rounds</div><div class="pattern-tag">OA (HackerRank, 70 min) · Phone · 4-5 onsite (coding + design + LP Bar Raiser)</div></div>
+    <div class="problem-row"><div class="problem-name">Must-prep LPs</div><div class="pattern-tag">Ownership · Customer Obsession · Dive Deep · Invent & Simplify · Bias for Action · Have Backbone</div></div>
+    <div class="problem-row"><div class="problem-name">Heaviest DSA</div><div class="pattern-tag">Arrays · Trees · Graphs · Heaps — mostly medium difficulty</div></div>
+    <div class="problem-row"><div class="problem-name">Top offices</div><div class="pattern-tag">Seattle · NYC · London · Vancouver · Berlin · Dublin · Singapore · Tokyo</div></div>
+  </div>
+  <div id="detail-netflix" class="detail-box">
+    <div class="section-title" style="margin-top:0">Netflix</div>
+    <div class="warn-box">Netflix skews Hard difficulty. The culture interview is a real elimination round. Top-of-market cash comp but no RSU — unique structure.</div>
+    <div class="problem-row"><div class="problem-name">Rounds</div><div class="pattern-tag">Phone screen · 2 technical · System design (heavy) · Culture/values</div></div>
+    <div class="problem-row"><div class="problem-name">Unique focus</div><div class="pattern-tag">High availability · Microservices · JVM/Java stack · Resilience patterns</div></div>
+    <div class="problem-row"><div class="problem-name">Culture keywords</div><div class="pattern-tag">Freedom & Responsibility · Context not Control · Disagree and Commit</div></div>
+    <div class="problem-row"><div class="problem-name">Wrong vs right answer</div><div class="pattern-tag">❌ "We decided as a team…" ✅ "I owned this decision — here's the tradeoff I made"</div></div>
+    <div class="problem-row"><div class="problem-name">Top offices (ex-India)</div><div class="pattern-tag">Los Gatos · LA · NYC · London · Amsterdam</div></div>
+  </div>
+  <div id="detail-apple" class="detail-box">
+    <div class="section-title" style="margin-top:0">Apple</div>
+    <div class="highlight-box">Apple interviews are team-specific. Research your target team (infra vs Siri vs App Store) before applying — they ask very different things.</div>
+    <div class="problem-row"><div class="problem-name">Rounds</div><div class="pattern-tag">Recruiter · Phone · Team match (2-3 rounds) · Onsite loop (5-6 rounds)</div></div>
+    <div class="problem-row"><div class="problem-name">Unique focus</div><div class="pattern-tag">Low-level design · OOP/design patterns · Clean code polish · Implementation-heavy over algorithmic trickery</div></div>
+    <div class="problem-row"><div class="problem-name">Heaviest topics</div><div class="pattern-tag">Arrays/strings · Trees · OOP · Domain-specific (iOS / distributed / infra by team)</div></div>
+    <div class="problem-row"><div class="problem-name">Top offices</div><div class="pattern-tag">Cupertino · Seattle · NYC · Austin · London · Paris · Tokyo · Singapore</div></div>
+  </div>
+  <div id="detail-rubrik" class="detail-box">
+    <div class="section-title" style="margin-top:0">Rubrik</div>
+    <div class="highlight-box">Distributed systems + concurrency knowledge is mandatory. Connect every coding answer to data replication, fault tolerance, or backup metadata concepts.</div>
+    <div class="problem-row"><div class="problem-name">Rounds</div><div class="pattern-tag">Phone screen · OA (HackerRank) · 2 coding loops · System design · HM behavioral</div></div>
+    <div class="problem-row"><div class="problem-name">Unique: concurrency</div><div class="pattern-tag">Print in Order (LC 1114) · FooBar Alternately (1115) · Building H2O (1117)</div></div>
+    <div class="problem-row"><div class="problem-name">Java must-knows</div><div class="pattern-tag">synchronized · ReentrantLock · Semaphore · CountDownLatch · CyclicBarrier</div></div>
+    <div class="problem-row"><div class="problem-name">System design topics</div><div class="pattern-tag">Backup metadata indexing · Deduplication (SHA-256) · Snapshot systems (Merkle tree) · Ransomware entropy detection</div></div>
+    <div class="problem-row"><div class="problem-name">Top offices (ex-India)</div><div class="pattern-tag">Palo Alto (HQ) · Amsterdam · Zurich · NYC · Remote US</div></div>
+  </div>
+  <div id="detail-stripe" class="detail-box">
+    <div class="section-title" style="margin-top:0">Stripe / Databricks / Snowflake</div>
+    <div class="success-box">Top pay, excellent engineering culture, hire globally. More realistic/open-ended coding than FAANG — closer to actual work.</div>
+    <div class="problem-row"><div class="problem-name">Process</div><div class="pattern-tag">Technical screen · 3-4 coding rounds · System design</div></div>
+    <div class="problem-row"><div class="problem-name">Coding style</div><div class="pattern-tag">Realistic tasks: design a query engine, implement a key-value store — less abstract puzzles</div></div>
+    <div class="problem-row"><div class="problem-name">2026 note</div><div class="pattern-tag">Mid-sized companies pioneering shift away from pure LeetCode toward practical assessments</div></div>
+  </div>
+</div>
+
+<!-- TRENDS -->
+<div id="trends" class="panel">
+  <div class="highlight-box">The interview bar has shifted ~1 standard deviation higher since 2021. Performance that got an offer then may not clear screening today.</div>
+
+  <div class="section-title">What changed in 2025-2026</div>
+  <div class="card">
+    <div class="trend-item">
+      <div class="trend-icon" style="background:var(--blue-bg)">🧠</div>
+      <div>
+        <div class="trend-title">Systems reasoning over LeetCode speed</div>
+        <div class="trend-desc">Interviewers increasingly hand you a failing service log or architecture and ask you to diagnose it. DSA still matters but is no longer the center of gravity. Expect retry storms, stale cache entries, cascading failures as the real problems to solve.</div>
+      </div>
+    </div>
+    <div class="trend-item">
+      <div class="trend-icon" style="background:var(--amber-bg)">🤖</div>
+      <div>
+        <div class="trend-title">AI tool usage is now a standard interview question</div>
+        <div class="trend-desc">Companies explicitly ask "How do you use Copilot/AI in your workflow?" Wrong answers: dismissing AI entirely OR blindly accepting its output. Right answer: 2 concrete stories — one where AI accelerated your work, one where you caught an AI mistake.</div>
+      </div>
+    </div>
+    <div class="trend-item">
+      <div class="trend-icon" style="background:var(--green-bg)">💻</div>
+      <div>
+        <div class="trend-title">Live coding replacing take-home tests</div>
+        <div class="trend-desc">71% of engineering leaders say AI makes skill assessment harder. Take-homes are disappearing. Live coding is rising — you need to explain reasoning out loud, not just produce output. Interviewers are trained to probe unusually polished code.</div>
+      </div>
+    </div>
+    <div class="trend-item">
+      <div class="trend-icon" style="background:var(--purple-bg)">📐</div>
+      <div>
+        <div class="trend-title">System design bar is significantly higher</div>
+        <div class="trend-desc">Mid-level now requires both HLD and LLD. Geospatial indexing (geohashing, quadtrees), stream processing, and AI-agentic architectures appear in standard SWE rounds. RAG pipelines and LLM integration knowledge increasingly expected even for non-ML roles.</div>
+      </div>
+    </div>
+    <div class="trend-item">
+      <div class="trend-icon" style="background:var(--red-bg)">📉</div>
+      <div>
+        <div class="trend-title">Downleveling is common — prepare strategically</div>
+        <div class="trend-desc">63% of senior candidates received downleveled offers in 2025. Always negotiate level before compensation. Bring promo docs or impact evidence from your current role. For 3-4 YOE: target mid-level, negotiate up from there.</div>
+      </div>
+    </div>
+    <div class="trend-item">
+      <div class="trend-icon" style="background:var(--green-bg)">📈</div>
+      <div>
+        <div class="trend-title">Hiring is recovering but highly selective</div>
+        <div class="trend-desc">Big tech hiring is up ~40% year-on-year from 2023 lows. But companies are methodical — precision over speed. Breadth of skills valued over narrow specialisms. Warm introductions >> mass applying on job boards.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">New topics to add to your prep (not in original files)</div>
+  <div class="card">
+    <div class="problem-row"><div class="problem-name">ByteByteGo system design articles</div><span class="badge badge-new">Add now</span><div class="pattern-tag">URL shortener · Rate limiter · Distributed cache · Chat system</div></div>
+    <div class="problem-row"><div class="problem-name">Geospatial indexing basics</div><span class="badge badge-new">Add now</span><div class="pattern-tag">Geohashing · Quadtrees · R-trees — now commonplace in design rounds</div></div>
+    <div class="problem-row"><div class="problem-name">Incident diagnosis drills</div><span class="badge badge-new">2026 must</span><div class="pattern-tag">Walk through a slow API / cache miss / retry storm scenario aloud</div></div>
+    <div class="problem-row"><div class="problem-name">AI tools answer (2 stories ready)</div><span class="badge badge-new">2026 must</span><div class="pattern-tag">Where it helped + where you caught its mistake — specific examples</div></div>
+    <div class="problem-row"><div class="problem-name">GenAI system design (for AI-adjacent roles)</div><span class="badge badge-new">Optional</span><div class="pattern-tag">RAG pipelines · LLM latency · Prompt design · Hallucination handling</div></div>
+  </div>
+
+  <div class="section-title">Free resources</div>
+  <div class="card">
+    <div class="problem-row"><div class="problem-name">NeetCode.io</div><div class="pattern-tag">Free videos for all 118 problems, organized by pattern</div></div>
+    <div class="problem-row"><div class="problem-name">LeetCode (free tier)</div><div class="pattern-tag">All core problems above are free</div></div>
+    <div class="problem-row"><div class="problem-name">Pramp.com</div><div class="pattern-tag">Free peer-to-peer mock interviews</div></div>
+    <div class="problem-row"><div class="problem-name">ByteByteGo blog (free articles)</div><div class="pattern-tag">System design for Month 4</div></div>
+    <div class="problem-row"><div class="problem-name">William Fiset — YouTube</div><div class="pattern-tag">Best graph algorithm explanations</div></div>
+    <div class="problem-row"><div class="problem-name">Back to Back SWE — YouTube</div><div class="pattern-tag">DP deep dives</div></div>
+  </div>
+</div>
+
+<!-- TRACKER -->
+<div id="tracker" class="panel">
+  <p style="font-size:13px;color:var(--text3);margin-bottom:1rem">Click problems to mark as done. Progress is saved in your browser.</p>
+  <div class="stat-grid">
+    <div class="stat"><div class="stat-num" id="done-count">0</div><div class="stat-label">Done</div></div>
+    <div class="stat"><div class="stat-num" id="pct">0%</div><div class="stat-label">Complete</div></div>
+    <div class="stat"><div class="stat-num" id="remaining">25</div><div class="stat-label">Remaining</div></div>
+  </div>
+  <div class="section-title">High-ROI checklist — problems that appear at 2+ companies</div>
+  <div class="card" id="checklist"></div>
+</div>
+
+</div>
+<div class="footer">Built from your data · Updated with 2025-2026 interview trends</div>
+</div>
+
+<script>
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function filterMonths(month,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.month-block').forEach(b=>{
+    b.style.display=(month==='all'||b.dataset.month===month)?'block':'none';
+  });
+}
+function toggleCompany(id,card){
+  var was=card.classList.contains('selected');
+  document.querySelectorAll('.company-card').forEach(c=>c.classList.remove('selected'));
+  document.querySelectorAll('.detail-box').forEach(d=>d.classList.remove('show'));
+  if(!was){card.classList.add('selected');document.getElementById('detail-'+id).classList.add('show');}
+}
+
+var problems=[
+  {name:'LRU Cache',diff:'Medium',why:'Rubrik · Meta · Apple · Amazon'},
+  {name:'Number of Islands',diff:'Medium',why:'Google · Meta · Microsoft · Amazon'},
+  {name:'Word Ladder',diff:'Hard',why:'Google · Rubrik · Amazon · Netflix'},
+  {name:'Merge Intervals',diff:'Medium',why:'Google · Meta · Microsoft · Amazon'},
+  {name:'Course Schedule I & II',diff:'Medium',why:'Google · Rubrik · Meta · Microsoft'},
+  {name:'Find Median from Data Stream',diff:'Hard',why:'Google · Rubrik · Netflix · Apple'},
+  {name:'Serialize/Deserialize Binary Tree',diff:'Hard',why:'Rubrik · Google · Meta'},
+  {name:'Edit Distance',diff:'Hard',why:'Google · Rubrik · Meta · Microsoft'},
+  {name:'Lowest Common Ancestor (BST + BT)',diff:'Medium',why:'Rubrik · Meta · Apple · Google'},
+  {name:'Clone Graph',diff:'Medium',why:'Google · Meta · Rubrik'},
+  {name:'Trapping Rain Water',diff:'Hard',why:'Amazon · Meta · Netflix'},
+  {name:'Critical Connections (Tarjan)',diff:'Hard',why:'Rubrik · Amazon'},
+  {name:'Accounts Merge',diff:'Medium',why:'Rubrik · Google'},
+  {name:'LFU Cache',diff:'Hard',why:'Rubrik · Netflix'},
+  {name:'Sliding Window Maximum',diff:'Hard',why:'Rubrik · Netflix'},
+  {name:'Design File System',diff:'Medium',why:'Rubrik domain'},
+  {name:'Text Justification',diff:'Hard',why:'Meta · Apple · Google'},
+  {name:'Regular Expression Matching',diff:'Hard',why:'Google · Rubrik · Meta'},
+  {name:'All Nodes Distance K in Binary Tree',diff:'Medium',why:'Rubrik'},
+  {name:'Recover BST',diff:'Hard',why:'Rubrik (data recovery theme)'},
+  {name:'Print in Order (LC 1114)',diff:'Easy',why:'Rubrik concurrency'},
+  {name:'Print FooBar Alternately (LC 1115)',diff:'Medium',why:'Rubrik concurrency'},
+  {name:'Building H2O (LC 1117)',diff:'Medium',why:'Rubrik concurrency'},
+  {name:'Range Sum Query Mutable',diff:'Medium',why:'Rubrik segment tree'},
+  {name:'Reorder Log Files',diff:'Easy',why:'Amazon OA classic'},
+];
+
+var STORAGE_KEY='swe_prep_checked_v1';
+var checked={};
+try{var s=localStorage.getItem(STORAGE_KEY);if(s)checked=JSON.parse(s);}catch(e){}
+
+var cl=document.getElementById('checklist');
+problems.forEach(function(p,i){
+  var row=document.createElement('div');
+  row.className='checkbox-row';
+  var diffClass=p.diff==='Easy'?'badge-easy':p.diff==='Medium'?'badge-med':'badge-hard';
+  row.innerHTML='<div class="checkbox'+(checked[i]?' checked':'')+'" id="cb'+i+'">'
+    +'<svg class="checkmark" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>'
+    +'<span style="flex:1;font-size:13px;font-weight:500;color:var(--text)">'+p.name+'</span>'
+    +'<span class="badge '+diffClass+'">'+p.diff+'</span>'
+    +'<span class="pattern-tag" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+p.why+'</span>';
+  row.onclick=function(){
+    checked[i]=!checked[i];
+    document.getElementById('cb'+i).classList.toggle('checked',checked[i]);
+    try{localStorage.setItem(STORAGE_KEY,JSON.stringify(checked));}catch(e){}
+    updateStats();
+  };
+  cl.appendChild(row);
+});
+
+function updateStats(){
+  var done=Object.values(checked).filter(Boolean).length;
+  var total=problems.length;
+  document.getElementById('done-count').textContent=done;
+  document.getElementById('pct').textContent=Math.round(done/total*100)+'%';
+  document.getElementById('remaining').textContent=total-done;
+}
+updateStats();
+</script>
+</body>
+</html>

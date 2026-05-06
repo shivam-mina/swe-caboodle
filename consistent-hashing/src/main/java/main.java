@@ -3,22 +3,22 @@ import utils.ConsistentHashing;
 
 public class main {
     public static void main(String[] args) {
-        ConsistentHashing ring = new ConsistentHashing();
+        ConsistentHashing ring = new ConsistentHashing(10);
 
-//        ring.addServer(new Server("Tokyo-East"));
+        ring.addServer(new Server("Tokyo-East"));
         ring.addServer(new Server("Osaka-West"));
         ring.addServer(new Server("Hokkaido-North"));
 
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
         ring.addData("shivam");
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
-        ring.addData("aryan1009");
+        ring.addData("aryan");
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
-        ring.addData("zenith57");
+        ring.addData("zenith");
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
-        ring.addData("alexios29");
+        ring.addData("alexios");
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
-        ring.addData("donaldtrump");
+        ring.addData("donald");
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
 
 
